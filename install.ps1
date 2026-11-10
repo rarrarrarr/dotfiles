@@ -134,7 +134,7 @@ else {
         ForEach-Object { ($_ -replace '#.*$', '').Trim() } |
         Where-Object { $_ }
     foreach ($m in $modules) {
-        pwsh -NoProfile -Command "if (Get-Module -ListAvailable '$m') { '  $m is already installed' } else { Install-Module '$m' -Scope CurrentUser -Force; '  installed $m' }"
+        pwsh -NoProfile -Command "if (Get-Module -ListAvailable '$m') { '  $m is already installed' } else { Install-PSResource '$m' -Scope CurrentUser -TrustRepository; '  installed $m' }"
         if ($LASTEXITCODE -ne 0) { Write-Warning "Installing module $m failed." }
     }
 }
