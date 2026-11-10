@@ -1,0 +1,18 @@
+# Shared git settings, included from ~/.gitconfig by install.ps1.
+# Keep user.name/user.email and anything machine-specific in ~/.gitconfig instead.
+# To change a setting here from the command line:
+#   git config -f <path to this file> <key> <value>
+
+# delta: https://github.com/dandavison/delta
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true  # use n and N to move between diff sections
+    dark = true      # or light = true, or omit for auto-detection
+
+[merge]
+    conflictStyle = zdiff3
