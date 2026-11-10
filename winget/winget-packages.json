@@ -1,6 +1,6 @@
 {
 	"$schema" : "https://aka.ms/winget-packages.schema.2.0.json",
-	"CreationDate" : "2026-11-09T23:35:00.999-00:00",
+	"CreationDate" : "2026-11-10T15:32:04.849-00:00",
 	"Sources" : 
 	[
 		{
@@ -245,6 +245,9 @@
 				},
 				{
 					"PackageIdentifier" : "Obsidian.Obsidian"
+				},
+				{
+					"PackageIdentifier" : "dandavison.delta"
 				},
 				{
 					"PackageIdentifier" : "jqlang.jq"
