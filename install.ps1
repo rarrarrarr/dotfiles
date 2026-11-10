@@ -17,7 +17,7 @@
 
 .EXAMPLE
     # Fresh machine, nothing cloned yet:
-    powershell -ExecutionPolicy Bypass -c "irm https://raw.githubusercontent.com/rarrarrarr/dotfiles/master/install.ps1 | iex"
+    powershell -ExecutionPolicy Bypass -c "irm https://raw.githubusercontent.com/rarrarrarr/dotfiles/main/install.ps1 | iex"
 
 .EXAMPLE
     # From an existing clone:

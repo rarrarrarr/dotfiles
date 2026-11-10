@@ -17,7 +17,7 @@ My Windows dev setup: a PowerShell 7 profile, shell tab completion, and the list
 In Windows PowerShell (the one that ships with Windows):
 
 ```powershell
-powershell -ExecutionPolicy Bypass -c "irm https://raw.githubusercontent.com/rarrarrarr/dotfiles/master/install.ps1 | iex"
+powershell -ExecutionPolicy Bypass -c "irm https://raw.githubusercontent.com/rarrarrarr/dotfiles/main/install.ps1 | iex"
 ```
 
 This installs git and PowerShell 7, clones this repo, installs the packages in the winget lists, installs the modules in `pwsh/modules.txt`, and points PowerShell 7's `$PROFILE` at `pwsh/profile.ps1`. An existing profile is backed up first.
