@@ -1,0 +1,4 @@
+# PowerShell 7 modules installed by install.ps1 (from the PowerShell Gallery).
+# One module name per line. Blank lines and anything after # are ignored.
+
+posh-git    # git tab completion and prompt status
