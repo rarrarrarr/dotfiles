@@ -1,6 +1,6 @@
 {
 	"$schema" : "https://aka.ms/winget-packages.schema.2.0.json",
-	"CreationDate" : "2026-11-10T15:32:04.849-00:00",
+	"CreationDate" : "2026-11-14T00:25:59.479-00:00",
 	"Sources" : 
 	[
 		{
@@ -43,16 +43,16 @@
 					"PackageIdentifier" : "AntibodySoftware.WizTree"
 				},
 				{
-					"PackageIdentifier" : "Microsoft.msodbcsql.17"
+					"PackageIdentifier" : "Kitware.CMake"
 				},
 				{
 					"PackageIdentifier" : "Microsoft.VCRedist.2010.x64"
 				},
 				{
-					"PackageIdentifier" : "Google.Chrome"
+					"PackageIdentifier" : "WinDirStat.WinDirStat"
 				},
 				{
-					"PackageIdentifier" : "Datronicsoft.SpacedeskDriver.Server"
+					"PackageIdentifier" : "Microsoft.msodbcsql.18"
 				},
 				{
 					"PackageIdentifier" : "Google.EarthPro"
@@ -67,16 +67,19 @@
 					"PackageIdentifier" : "Microsoft.VCRedist.2008.x64"
 				},
 				{
-					"PackageIdentifier" : "LINQPad.LINQPad.8"
+					"PackageIdentifier" : "GLab.GLab"
 				},
 				{
-					"PackageIdentifier" : "Microsoft.msodbcsql.18"
+					"PackageIdentifier" : "GOG.Galaxy"
+				},
+				{
+					"PackageIdentifier" : "LINQPad.LINQPad.8"
 				},
 				{
 					"PackageIdentifier" : "GitHub.cli"
 				},
 				{
-					"PackageIdentifier" : "WinDirStat.WinDirStat"
+					"PackageIdentifier" : "Microsoft.msodbcsql.17"
 				},
 				{
 					"PackageIdentifier" : "Nvidia.CUDA"
@@ -88,10 +91,16 @@
 					"PackageIdentifier" : "dotPDN.PaintDotNet"
 				},
 				{
-					"PackageIdentifier" : "Microsoft.SQLServer.OLEDBDriver.19"
+					"PackageIdentifier" : "Datronicsoft.SpacedeskDriver.Server"
 				},
 				{
 					"PackageIdentifier" : "Nvidia.Nsight.Compute"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.SQLServer.OLEDBDriver.19"
+				},
+				{
+					"PackageIdentifier" : "BlenderFoundation.Blender"
 				},
 				{
 					"PackageIdentifier" : "Microsoft.Azd"
@@ -100,22 +109,16 @@
 					"PackageIdentifier" : "CodeSector.TeraCopy"
 				},
 				{
+					"PackageIdentifier" : "Google.Chrome"
+				},
+				{
 					"PackageIdentifier" : "Microsoft.WebDeploy"
 				},
 				{
 					"PackageIdentifier" : "Microsoft.GameInput"
 				},
 				{
-					"PackageIdentifier" : "BlenderFoundation.Blender"
-				},
-				{
-					"PackageIdentifier" : "Kitware.CMake"
-				},
-				{
 					"PackageIdentifier" : "Microsoft.VisualStudio.Community"
-				},
-				{
-					"PackageIdentifier" : "Microsoft.VisualStudio.Community.Insiders"
 				},
 				{
 					"PackageIdentifier" : "PowerSoftware.AnyBurn"
@@ -157,16 +160,13 @@
 					"PackageIdentifier" : "Microsoft.VCRedist.2013.x64"
 				},
 				{
+					"PackageIdentifier" : "Microsoft.DotNet.DesktopRuntime.6"
+				},
+				{
 					"PackageIdentifier" : "Valve.SteamLink"
 				},
 				{
-					"PackageIdentifier" : "Microsoft.WindowsADK"
-				},
-				{
-					"PackageIdentifier" : "Microsoft.VCRedist.2015+.x64"
-				},
-				{
-					"PackageIdentifier" : "Microsoft.DotNet.Runtime.6"
+					"PackageIdentifier" : "Python.Launcher"
 				},
 				{
 					"PackageIdentifier" : "Microsoft.VCRedist.2012.x86"
@@ -175,43 +175,28 @@
 					"PackageIdentifier" : "Microsoft.DotNet.DesktopRuntime.9"
 				},
 				{
+					"PackageIdentifier" : "Microsoft.DotNet.SDK.9"
+				},
+				{
 					"PackageIdentifier" : "EpicGames.EpicOnlineServices"
-				},
-				{
-					"PackageIdentifier" : "Microsoft.DotNet.SDK.8"
-				},
-				{
-					"PackageIdentifier" : "GLab.GLab"
 				},
 				{
 					"PackageIdentifier" : "Microsoft.VCRedist.2005.x86"
 				},
 				{
-					"PackageIdentifier" : "GOG.Galaxy"
-				},
-				{
-					"PackageIdentifier" : "Microsoft.DotNet.SDK.9"
-				},
-				{
 					"PackageIdentifier" : "ElectronicArts.EADesktop"
 				},
 				{
-					"PackageIdentifier" : "Microsoft.DotNet.Runtime.10"
-				},
-				{
-					"PackageIdentifier" : "Python.Launcher"
+					"PackageIdentifier" : "Microsoft.WindowsADK"
 				},
 				{
 					"PackageIdentifier" : "Microsoft.VCRedist.2008.x86"
 				},
 				{
-					"PackageIdentifier" : "Microsoft.VCRedist.2015+.x86"
+					"PackageIdentifier" : "Microsoft.DotNet.Runtime.6"
 				},
 				{
 					"PackageIdentifier" : "Microsoft.VCRedist.2013.x86"
-				},
-				{
-					"PackageIdentifier" : "Tailscale.Tailscale"
 				},
 				{
 					"PackageIdentifier" : "EpicGames.EpicGamesLauncher"
@@ -223,19 +208,34 @@
 					"PackageIdentifier" : "Paragon.APFS"
 				},
 				{
+					"PackageIdentifier" : "Microsoft.DotNet.Runtime.10"
+				},
+				{
+					"PackageIdentifier" : "Tailscale.Tailscale"
+				},
+				{
 					"PackageIdentifier" : "Microsoft.VCRedist.2010.x86"
 				},
 				{
-					"PackageIdentifier" : "Microsoft.DotNet.AspNetCore.9"
-				},
-				{
-					"PackageIdentifier" : "Microsoft.DotNet.DesktopRuntime.6"
+					"PackageIdentifier" : "Microsoft.VCRedist.2015+.x86"
 				},
 				{
 					"PackageIdentifier" : "Microsoft.DotNet.Runtime.8"
 				},
 				{
+					"PackageIdentifier" : "Microsoft.DotNet.AspNetCore.9"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.VCRedist.2015+.x64"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.DotNet.SDK.8"
+				},
+				{
 					"PackageIdentifier" : "Autodesk.Fusion"
+				},
+				{
+					"PackageIdentifier" : "BurntSushi.ripgrep.MSVC"
 				},
 				{
 					"PackageIdentifier" : "Discord.Discord"
