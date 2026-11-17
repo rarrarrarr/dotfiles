@@ -13,7 +13,8 @@
       4. Install any package from the repo's winget\*.json lists that isn't installed yet
       5. Install the PowerShell 7 modules listed in pwsh\modules.txt
       6. Make ~/.gitconfig include the repo's git\gitconfig
-      7. Point PowerShell 7's $PROFILE at the repo's pwsh\profile.ps1
+      7. Make ~/.inputrc include the repo's readline\inputrc
+      8. Point PowerShell 7's $PROFILE at the repo's pwsh\profile.ps1
 
 .EXAMPLE
     # Fresh machine, nothing cloned yet:
@@ -156,6 +157,30 @@ else {
 }
 if (-not (git config --global user.email)) {
     Write-Warning "user.email isn't set. Run: git config --global user.email <your GitHub noreply address>"
+}
+
+# ---------------------------------------------------------------------------
+# ~/.inputrc (read by Git Bash's readline) includes the shared settings from the
+# repo with readline's $include directive, the same way ~/.gitconfig does.
+# Existing lines are kept after the include, so they still apply and override it.
+$repoInputrc  = (Join-Path $DotfilesPath 'readline\inputrc') -replace '\\', '/'
+$homeInputrc  = Join-Path $HOME '.inputrc'
+$includeLine  = "`$include $repoInputrc"
+Write-Step "Making ~/.inputrc include $repoInputrc"
+$existing = if (Test-Path $homeInputrc) { @(Get-Content $homeInputrc) } else { @() }
+if ($existing | Where-Object { $_.Trim() -eq $includeLine }) {
+    Write-Host '  ~/.inputrc already includes it'
+}
+else {
+    if ($existing) {
+        $backup = "$homeInputrc.bak-$(Get-Date -Format yyyyMMddHHmmss)"
+        Copy-Item $homeInputrc $backup
+        Write-Host "  Backed up existing ~/.inputrc to $backup"
+    }
+    # No BOM and LF endings: readline would treat a BOM as part of the first line.
+    $content = (@($includeLine) + $existing) -join "`n"
+    [IO.File]::WriteAllText($homeInputrc, "$content`n", (New-Object Text.UTF8Encoding $false))
+    Write-Host "  Added `$include to ~/.inputrc"
 }
 
 # ---------------------------------------------------------------------------

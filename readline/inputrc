@@ -1,0 +1,6 @@
+# Shared readline settings (Git Bash and anything else that reads ~/.inputrc).
+# ~/.inputrc pulls this in with:  $include X:/projects/github/rarrarrarr/dotfiles/readline/inputrc
+# Lines after the $include in ~/.inputrc are machine-specific and override these.
+
+# Turning these off because they have been failing for me and end up pasting [200 at the start of the command
+set enable-bracketed-paste off
