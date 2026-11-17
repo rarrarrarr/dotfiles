@@ -7,7 +7,7 @@ My Windows dev setup: a PowerShell 7 profile, shell tab completion, and the list
 | Path | What it is |
 | --- | --- |
 | [`install.ps1`](install.ps1) | Sets up a machine from this repo. Safe to re-run. |
-| [`pwsh/profile.ps1`](pwsh/profile.ps1) | PowerShell 7 profile. Tab completion for dotnet, az, git, winget, gh, glab and azd, loaded in the background so the prompt appears right away. |
+| [`pwsh/profile.ps1`](pwsh/profile.ps1) | PowerShell 7 profile. Tab completion for dotnet, az, git, winget, gh, glab, azd and uv, loaded in the background so the prompt appears right away. |
 | [`git/gitconfig`](git/gitconfig) | Shared git settings (delta as the pager). `~/.gitconfig` includes it and keeps the machine-specific parts, like `user.email`. |
 | [`readline/inputrc`](readline/inputrc) | Shared readline settings for Git Bash. `~/.inputrc` includes it with `$include` and keeps anything machine-specific. |
 | [`pwsh/modules.txt`](pwsh/modules.txt) | PowerShell Gallery modules to install (one per line). |

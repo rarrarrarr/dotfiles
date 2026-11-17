@@ -39,14 +39,21 @@ $global:__completionJob = Start-ThreadJob {
     gh completion -s powershell
     glab completion -s powershell
     azd completion powershell
+    uv generate-shell-completion powershell
+    uvx --generate-shell-completion powershell
 }
 
 # 2. When the prompt is idle and the job is done, load everything into this session
 $null = Register-EngineEvent -SourceIdentifier PowerShell.OnIdle -Action {
     if ($global:__completionJob.State -notin 'Completed', 'Failed') { return }   # not ready, try next idle
-    $script = Receive-Job $global:__completionJob | Out-String
+    $lines = (Receive-Job $global:__completionJob | Out-String) -split '\r?\n'
     Remove-Job $global:__completionJob
-    Invoke-Expression $script
+    # `using` statements must come first in a script, and dotnet's and uv's completion
+    # scripts each start with the same ones. Move them to the top, once each: a repeated
+    # `using namespace` silently breaks the -Native completers that rely on it.
+    $using = $lines | Where-Object { $_ -match '^\s*using\s' } | ForEach-Object Trim | Select-Object -Unique
+    $rest  = $lines | Where-Object { $_ -notmatch '^\s*using\s' }
+    Invoke-Expression ((@($using) + @($rest)) -join "`n")
     Import-Module posh-git -Global
     Unregister-Event -SubscriptionId $EventSubscriber.SubscriptionId
 }
