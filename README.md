@@ -46,7 +46,7 @@ Edits to `pwsh/profile.ps1` take effect in the next new terminal, and committing
 
 `~/.inputrc` works the same way, using readline's `$include` directive. Its first line is:
 
-```
+```bash
 $include X:/projects/github/rarrarrarr/dotfiles/readline/inputrc
 ```
 
