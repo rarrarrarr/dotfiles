@@ -12,9 +12,10 @@
       3. Clone the dotfiles repo (or pull if already cloned)
       4. Install any package from the repo's winget\*.json lists that isn't installed yet
       5. Install the PowerShell 7 modules listed in pwsh\modules.txt
-      6. Make ~/.gitconfig include the repo's git\gitconfig
-      7. Make ~/.inputrc include the repo's readline\inputrc
-      8. Point PowerShell 7's $PROFILE at the repo's pwsh\profile.ps1
+      6. Install the uv tools listed in uv\tools.txt and put uv's tool folder on PATH
+      7. Make ~/.gitconfig include the repo's git\gitconfig
+      8. Make ~/.inputrc include the repo's readline\inputrc
+      9. Point PowerShell 7's $PROFILE at the repo's pwsh\profile.ps1
 
 .EXAMPLE
     # Fresh machine, nothing cloned yet:
@@ -138,6 +139,42 @@ else {
         pwsh -NoProfile -Command "if (Get-Module -ListAvailable '$m') { '  $m is already installed' } else { Install-PSResource '$m' -Scope CurrentUser -TrustRepository; '  installed $m' }"
         if ($LASTEXITCODE -ne 0) { Write-Warning "Installing module $m failed." }
     }
+}
+
+# ---------------------------------------------------------------------------
+# uv itself comes from the winget list (astral-sh.uv). `uv tool install` puts each
+# tool's executables in uv's tool bin folder (~\.local\bin), and
+# `uv tool update-shell` adds that folder to the user PATH so every shell finds them.
+$toolList = Join-Path $DotfilesPath 'uv\tools.txt'
+Write-Step "Installing uv tools from $toolList"
+if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
+    Write-Warning "uv isn't on PATH, so uv tools were skipped. Add astral-sh.uv to a winget list, or open a new terminal and re-run."
+}
+elseif (-not (Test-Path $toolList)) {
+    Write-Warning "No uv tool list at $toolList"
+}
+else {
+    # `uv tool list` prints "name vX.Y.Z" for each tool, then "- exe" lines for its executables.
+    $installedTools = @{}
+    foreach ($line in (uv tool list 2>$null)) {
+        if ($line -match '^(\S+) v') { $installedTools[$Matches[1]] = $true }
+    }
+    # One package name per line; blank lines and # comments are ignored.
+    $tools = Get-Content $toolList |
+        ForEach-Object { ($_ -replace '#.*$', '').Trim() } |
+        Where-Object { $_ }
+    foreach ($t in $tools) {
+        if ($installedTools.ContainsKey($t)) {
+            Write-Host "  $t is already installed"
+            continue
+        }
+        uv tool install $t
+        if ($LASTEXITCODE -ne 0) { Write-Warning "uv tool install $t failed (exit code $LASTEXITCODE)" }
+    }
+
+    uv tool update-shell
+    if ($LASTEXITCODE -ne 0) { Write-Warning "uv tool update-shell failed; add $(uv tool dir --bin) to PATH yourself." }
+    Update-SessionPath
 }
 
 # ---------------------------------------------------------------------------

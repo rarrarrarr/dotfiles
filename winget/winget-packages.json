@@ -1,6 +1,6 @@
 {
 	"$schema" : "https://aka.ms/winget-packages.schema.2.0.json",
-	"CreationDate" : "2026-11-14T00:25:59.479-00:00",
+	"CreationDate" : "2026-11-16T22:54:15.245-00:00",
 	"Sources" : 
 	[
 		{
@@ -242,6 +242,9 @@
 				},
 				{
 					"PackageIdentifier" : "Zoom.Zoom.EXE"
+				},
+				{
+					"PackageIdentifier" : "astral-sh.uv"
 				},
 				{
 					"PackageIdentifier" : "Obsidian.Obsidian"

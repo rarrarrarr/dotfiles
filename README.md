@@ -11,6 +11,7 @@ My Windows dev setup: a PowerShell 7 profile, shell tab completion, and the list
 | [`git/gitconfig`](git/gitconfig) | Shared git settings (delta as the pager). `~/.gitconfig` includes it and keeps the machine-specific parts, like `user.email`. |
 | [`readline/inputrc`](readline/inputrc) | Shared readline settings for Git Bash. `~/.inputrc` includes it with `$include` and keeps anything machine-specific. |
 | [`pwsh/modules.txt`](pwsh/modules.txt) | PowerShell Gallery modules to install (one per line). |
+| [`uv/tools.txt`](uv/tools.txt) | Python CLI tools to install with `uv tool install` (one per line). uv itself comes from the winget list. |
 | [`winget/winget-packages.json`](winget/winget-packages.json) | Package lists in `winget export` format. `install.ps1` installs any listed package that's missing. |
 
 ## Set up a fresh machine
@@ -21,7 +22,7 @@ In Windows PowerShell (the one that ships with Windows):
 powershell -ExecutionPolicy Bypass -c "irm https://raw.githubusercontent.com/rarrarrarr/dotfiles/main/install.ps1 | iex"
 ```
 
-This installs git and PowerShell 7, clones this repo, installs the packages in the winget lists, installs the modules in `pwsh/modules.txt`, makes `~/.inputrc` include `readline/inputrc`, and points PowerShell 7's `$PROFILE` at `pwsh/profile.ps1`. An existing profile is backed up first.
+This installs git and PowerShell 7, clones this repo, installs the packages in the winget lists, installs the modules in `pwsh/modules.txt`, installs the uv tools in `uv/tools.txt` and adds uv's tool folder (`~\.local\bin`) to your user PATH, makes `~/.inputrc` include `readline/inputrc`, and points PowerShell 7's `$PROFILE` at `pwsh/profile.ps1`. An existing profile is backed up first.
 
 The repo is cloned to `X:\projects\github\rarrarrarr\dotfiles` if an `X:` drive exists, otherwise `~\src\dotfiles`. Pass `-DotfilesPath` to choose another location.
 
@@ -31,7 +32,7 @@ From an existing clone:
 .\install.ps1
 ```
 
-Every run installs whatever is in the package lists, modules list and config but missing from the machine, and leaves everything else alone. To add a package, add it to a list in `winget/` and re-run.
+Every run installs whatever is in the package lists, modules list, uv tools list and config but missing from the machine, and leaves everything else alone. To add a package, add it to a list in `winget/` and re-run.
 
 ## How the profile is linked
 
@@ -55,6 +56,7 @@ Anything after that line is machine-specific and overrides the shared settings. 
 
 - **Packages:** `winget export -o winget\winget-packages.json`
 - **Modules:** add the module name to `pwsh/modules.txt`
+- **uv tools:** add the package name to `uv/tools.txt` (`uv tool list` shows what's installed)
 
 ## License
 

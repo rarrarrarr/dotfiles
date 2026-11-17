@@ -1,0 +1,4 @@
+# Python CLI tools installed by install.ps1 with `uv tool install`.
+# One package name per line. Blank lines and anything after # are ignored.
+
+gputaskman    # GPU task manager (gputaskman / gtm)
