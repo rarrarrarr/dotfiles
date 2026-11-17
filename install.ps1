@@ -223,23 +223,58 @@ else {
 # ---------------------------------------------------------------------------
 # Ask pwsh 7 for its own $PROFILE path; 5.1's $PROFILE points somewhere else,
 # and Documents may be redirected into OneDrive.
+#
+# When Documents is in OneDrive, $PROFILE syncs to every PC on that account, and
+# each PC may have the repo somewhere different. So $PROFILE lists every known
+# clone location and loads the first that exists. Locations already listed (by
+# other PCs) are kept, and this PC's is added if it's missing, so every PC ends
+# up writing the same file.
 Write-Step 'Linking the PowerShell 7 profile'
-$pwshProfile   = (pwsh -NoProfile -Command '$PROFILE').Trim()
-$repoProfile   = Join-Path $DotfilesPath 'pwsh\profile.ps1'
-$profileLine   = ". '$repoProfile'"
+$pwshProfile = (pwsh -NoProfile -Command '$PROFILE').Trim()
+$repoProfile = Join-Path $DotfilesPath 'pwsh\profile.ps1'
 
-if ((Test-Path $pwshProfile) -and ((Get-Content $pwshProfile -Raw) -match [regex]::Escape($profileLine))) {
+# Entries are PowerShell string literals, written into $PROFILE as-is.
+$candidates = [Collections.Generic.List[string]]@(
+    "'X:\projects\github\rarrarrarr\dotfiles\pwsh\profile.ps1'"
+    '"$HOME\src\dotfiles\pwsh\profile.ps1"'
+)
+$existingProfile = if (Test-Path $pwshProfile) { @(Get-Content $pwshProfile) } else { @() }
+foreach ($line in $existingProfile) {
+    if ($line -match '^    (''[^'']+''|"[^"]+")\s*$') { $literal = $Matches[1] }   # entry in our list
+    elseif ($line -match "^\. '([^']+)'\s*$")       { $literal = "'$($Matches[1])'" }  # old one-line format
+    else { continue }
+    if ($candidates -notcontains $literal) { $candidates.Add($literal) }
+}
+$expand = { param($literal) $literal.Substring(1, $literal.Length - 2).Replace('$HOME', $HOME) }
+if (-not ($candidates | Where-Object { (& $expand $_) -eq $repoProfile })) {
+    $candidates.Add("'$repoProfile'")
+}
+
+$profileContent = @"
+# Written by dotfiles\install.ps1; re-run it rather than editing this file.
+# This file may sync between PCs through OneDrive, so it lists every place the
+# dotfiles repo is cloned and loads the profile from the first one that exists.
+foreach (`$dotfilesProfile in @(
+$(($candidates | ForEach-Object { "    $_" }) -join "`n")
+)) {
+    if (Test-Path `$dotfilesProfile) { . `$dotfilesProfile; break }
+}
+Remove-Variable dotfilesProfile
+"@
+
+if (($existingProfile -join "`n").Trim() -eq ($profileContent -replace '\r', '').Trim()) {
     Write-Host "  $pwshProfile already loads the repo profile"
 }
 else {
-    if (Test-Path $pwshProfile) {
+    if ($existingProfile) {
         $backup = "$pwshProfile.bak-$(Get-Date -Format yyyyMMddHHmmss)"
         Copy-Item $pwshProfile $backup
         Write-Host "  Backed up existing profile to $backup"
     }
     New-Item -ItemType Directory -Force -Path (Split-Path $pwshProfile) | Out-Null
-    Set-Content -Path $pwshProfile -Value $profileLine -Encoding UTF8
-    Write-Host "  $pwshProfile now loads $repoProfile"
+    Set-Content -Path $pwshProfile -Value $profileContent -Encoding UTF8
+    Write-Host "  $pwshProfile now loads the repo profile from the first of:"
+    $candidates | ForEach-Object { Write-Host "    $_" }
 }
 
 # ---------------------------------------------------------------------------

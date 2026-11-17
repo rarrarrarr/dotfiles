@@ -36,11 +36,18 @@ Every run installs whatever is in the package lists, modules list, uv tools list
 
 ## How the profile is linked
 
-`$PROFILE` contains a single line that dot-sources the profile in this repo:
+`$PROFILE` lists the places this repo might be cloned and dot-sources the profile from the first one that exists:
 
 ```powershell
-. 'X:\projects\github\rarrarrarr\dotfiles\pwsh\profile.ps1'
+foreach ($dotfilesProfile in @(
+    'X:\projects\github\rarrarrarr\dotfiles\pwsh\profile.ps1'
+    "$HOME\src\dotfiles\pwsh\profile.ps1"
+)) {
+    if (Test-Path $dotfilesProfile) { . $dotfilesProfile; break }
+}
 ```
+
+A list is needed because when Documents is backed up by OneDrive, `$PROFILE` lives there too and syncs to every PC on that account, and each PC may have the repo somewhere different. `install.ps1` keeps the locations already listed and adds the current PC's if it's missing (for example, one cloned with `-DotfilesPath`), so the PCs never overwrite each other's entries.
 
 Edits to `pwsh/profile.ps1` take effect in the next new terminal, and committing them is all it takes to sync them.
 
